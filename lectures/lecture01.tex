@@ -1,0 +1,189 @@
+\chapter{Aug.~19 --- The Fourier Transform}
+
+\section{The Fourier Transform on \texorpdfstring{$L^1(\R)$}{L1(R)}}
+
+All integrals will be taken over $\R$
+unless otherwise specified.
+
+\begin{definition}
+  The \emph{Fourier transform} of
+  $f \in L^1(\R)$ is
+  \[
+    \widehat{f}(\xi)
+    = \int f(x) e^{-2\pi i \xi x}\, dx,
+    \quad \xi \in \R.
+  \]
+\end{definition}
+
+\begin{remark}
+  Note that by the triangle inequality,
+  \[
+    |\widehat{f}(\xi)|
+    \le \int |f(x) e^{-2\pi i \xi x}|\, dx
+    = \int |f(x)|\, dx
+    = \|f\|_{1}
+    < \infty,
+  \]
+  so $\widehat{f}(\xi)$ exists
+  for all $\xi \in \R$ (in fact,
+  $\widehat{f}$ is continuous).
+\end{remark}
+
+\begin{remark}
+  The Fourier transform is an
+  operator $\F : L^1(\R) \to L^\infty(\R)$
+  as
+  $\|\widehat{f}\|_\infty = \esssup_{\xi \in \R} |\widehat{f}(\xi)| \le \|f\|_1$.
+  This is linear in $f$.
+  The \emph{operator norm} of
+  $\F$ is
+  \[
+    \|\F\| = \|\F\|_{L^1 \to L^\infty}
+    = \sup_{\|f\|_1 = 1} \|\widehat{f}\|_\infty
+    \le \sup_{\|f\|_1 = 1} \|f\|_1
+    = 1,
+  \]
+  so $\F$ is a bounded linear operator.
+  However, $\mathcal{F}$ is
+  not isometric (norm-preserving)
+  in general.
+\end{remark}
+
+\begin{remark}
+  Observe that
+  \[
+    \widehat{f}(0)
+    = \int f(x) e^{-2\pi i \cdot 0 \cdot x}\, dx
+    = \int f(x)\, dx.
+  \]
+  So if $f \ge 0$ and we normalize
+  $f$ so that $\widehat{f}(0) = 1$, then
+  we have
+  \[
+    |\widehat{f}(\xi)|
+    \le \int f(x)\, dx = \widehat{f}(0),
+  \]
+  and so $\|\widehat{f}\|_\infty = \esssup_{\xi \in \R} |\widehat{f}(\xi)| \le 1$.
+  This is one particular
+  case where $\F$ does preserve the norm.
+\end{remark}
+
+\begin{definition}
+  For $r \ne 0$, \emph{dilation} of
+  $f$ by $r$ is $f_r(x) = rf(rx)$.
+  Note that $\|f_r\|_1 = \|f\|_1$.
+\end{definition}
+
+\begin{example}
+  The \emph{Dirichlet function}
+  is $d(\xi) = \sin(\xi) / \pi \xi \in C_0(\R)$.\footnote{Recall that $C_0(\R)$ is the space of continuous functions $f : \R \to \C$ such that $\lim_{x \to \pm \infty} f(x) = 0$.}
+  Note that $d \notin L^1(\R)$.
+  We can also define the
+  \emph{sinc} function as
+  $\sinc \xi = \sin(\pi \xi) / (\pi \xi) = d\pi(x)$.
+
+  However, $d$ is the Fourier transform
+  of a function in $L^1(\R)$.
+  Consider the
+  \[
+    \chi_{-[T, T]}(x) =
+    \begin{cases}
+      1 & \text{if } |x| \le T, \\
+      0 & |x| > T.
+    \end{cases}
+  \]
+  Note that $\chi_{-[T, T]} \in L^1(\R)$.
+  Then we have
+  \[
+    \widehat{\chi}_{-[T, T]}(\xi)
+    = \int_{-T}^{T} e^{-2\pi i \xi x}\, dx
+    = \left.\frac{e^{-2\pi i \xi x}}{-2\pi i \xi}\right|_{-T}^T
+    = \frac{\sin(2\pi T \xi)}{\pi \xi}
+    = d_{2\pi T}(\xi),
+  \]
+  so we see that
+  $\widehat{\chi}_{-[T, T]} \in C_0(\R) \subsetneq L^\infty(\R)$.
+\end{example}
+
+\begin{remark}
+  We will see in general that
+  $\mathcal{F} : L^1(\R) \to C_0(\R)$,
+  this is the Riemann-Lebesgue lemma.
+  The image of $\F$ is a proper
+  dense subspace of $C_0(\R)$, which
+  implies that $\F^{-1}$ must be unbounded
+  as a linear operator by Banach space
+  theory.
+\end{remark}
+
+\begin{prop}
+  If $f \in L^1(\R)$, then $\widehat{f}$
+  is uniformly continuous on $\R$, i.e.
+  \[
+    \|\widehat{f} - T_\eta\widehat{f}\|_\infty
+    = \sup_{\xi \in \R} |\widehat{f}(\xi) - \widehat{f}(\xi - \eta)|
+    \xrightarrow{\eta \to 0} 0,
+  \]
+  where $T_\eta \widehat{f}(\xi) = \widehat{f}(\xi - \eta)$.
+\end{prop}
+
+\begin{proof}
+  We can write the difference as
+  \[
+    |\widehat{f}(\xi) - \widehat{f}(\xi - \eta)|
+    = \left|\int f(x) (e^{-2\pi i \xi x} - e^{-2\pi i (\xi - \eta)x})\, dx\right|
+    \le \int |f(x)| |e^{-2\pi i \xi x} - e^{-2\pi i (\xi - \eta)x}|\, dx.
+  \]
+  Note that $f \in L^1(\R)$ and
+  $|e^{-2\pi i \xi x} - e^{-2\pi i (\xi - \eta)x}| = |1 - e^{2\pi i \eta x}| \to 0$
+  as $\eta \to 0$
+  independent of $\xi$, so the statement
+  follows from the dominated convergence
+  theorem (the integrand is dominated
+  by $2f$).
+\end{proof}
+
+\section{Motivation for the Fourier Transform}
+
+\begin{remark}
+  We will define the \emph{inverse Fourier transform}
+  of $f \in L^1(\R)$ as
+  \[
+    \widecheck{f}(x)
+    = \int f(x) e^{2\pi i \xi x}\, d\xi.
+  \]
+  Note that $\widecheck{f}(\xi) = \widehat{f}(-\xi)$.
+  With enough assumptions, this is
+  an inverse to the Fourier transform.
+\end{remark}
+
+\begin{prop}[Fourier inversion formula]
+  If $f, \widehat{f} \in L^1(\R)$,
+  then
+  \[
+    f(x) = (\widehat{f})^\vee(x)
+    = \int \widehat{f}(\xi) e^{2\pi i \xi x}\, d\xi.
+  \]
+\end{prop}
+
+\begin{remark}
+  Note that $e_\xi(x) = e^{2\pi i \xi x} = \cos 2\pi \xi x + i \sin 2\pi \xi x$
+  and $e_\xi : \R \to S^1 = \{ z \in \C : |z| = 1 \}$.
+  We have
+  $e_\xi(x + y) = e_\xi(x) e_\xi(y)$, so
+  $e_\xi$ is a homomorphism, and it is
+  also continuous. Thus $e_\xi$ is
+  a \emph{character} on $\R$ (in fact,
+  every character on $\R$ is of the form
+  $e_\xi$ for some $\xi$). One
+  can use this idea to define Fourier
+  transforms in much more general settings.
+\end{remark}
+
+\begin{remark}
+  The Fourier transform decomposes a
+  function $f$ into the pure harmonics
+  $e_\xi$, and the inversion formula says
+  that we can recover $f$ as a ``sum''
+  of these pure harmonics.
+\end{remark}
