@@ -1,0 +1,278 @@
+\chapter{Aug.~21 --- The Riemann-Lebesgue Lemma}
+
+\section{Properties of the Fourier Transform}
+
+\begin{definition}
+  Define the following operators:
+  \begin{enumerate}
+    \item \emph{Translation}:
+      $T_a f(x) = f(x - a)$ for $a \in \R$;
+    \item \emph{Modulation}:
+      $M_b f(x) = e^{2\pi i b x} f(x)$
+      for $b \in \R$;
+    \item \emph{Dilation}:
+      $f_{\lambda}(x) = \lambda f(\lambda x)$
+      for $\lambda > 0$;
+    \item \emph{Involution}:
+      $\widetilde{f}(x) = \overline{f(-x)}$.
+  \end{enumerate}
+\end{definition}
+
+\begin{remark}
+  Translation and modulation are
+  isometries on $L^p(\R)$ for any $p$.
+  Dilation
+  as defined above is $L^1$-normalized, so
+  it is only an isometry on $L^1(\R)$.
+\end{remark}
+
+\begin{exercise}
+  If $f \in L^1(\R)$, then
+  \begin{enumerate}
+    \item $(T_a f)^\wedge(\xi) = (M_{-a} \widehat{f})(\xi) = e^{-2\pi i \xi a} \widehat{f}(\xi)$;
+    \item $(M_b f)^\wedge(\xi) = (T_b \widehat{f})(\xi) = \widehat{f}(\xi - b)$;
+    \item $(f_\lambda)^\wedge(\xi) = \lambda (f_{1 / \lambda})^\wedge(\xi) = \widehat{f}(\xi / \lambda)$;\footnote{Note that the result is an $L^\infty$-normalized dilation.}
+    \item $(\overline{f})^\wedge(\xi) = (\widehat{f})^{\sim}(\xi) = \overline{\widehat{f}(-\xi)}$;
+    \item $(\widetilde{f})^\wedge(\xi) = \overline{\widehat{f}(\xi)}$.
+  \end{enumerate}
+\end{exercise}
+
+\section{The Riemann-Lebesgue Lemma}
+\begin{definition}
+  Let $C_c(\R)$ be the space of continuous
+  functions with compact support. For a continuous function, the \emph{support} of $f$, denoted $\supp(f) = \overline{\{x \in \R : f(x) \ne 0\}}$.
+  So for a continuous function $f$,
+  $\supp(f)$ is compact if and only if
+  $f = 0$ outside some finite interval.
+\end{definition}
+
+\begin{theorem}
+  $C_c(\R)$ is dense in $L^p(\R)$
+  for $1 \le p < \infty$. In other words,
+  \begin{enumerate}
+    \item the closure of $C_c(\R)$ in $L^p(\R)$
+      is all of $L^p(\R)$;
+    \item for any $f \in L^p(\R)$
+      and $\epsilon > 0$, there
+      exists $g \in C_c(\R)$ such that
+      $\|f - g\|_p < \epsilon$;
+    \item if $f \in L^p(\R)$, then there
+      exists $g_n \in C_c(\R)$ such that
+      $g_n \to f$ in $L^p$-norm, i.e.
+      $\|g_n - f\|_p \to 0$.
+  \end{enumerate}
+  For $p = \infty$, $C_c(\R)$ is
+  dense in $C_0(\R)$ with respect to
+  the $L^\infty$-norm (this is the same
+  as the uniform norm for continuous
+  functions).
+\end{theorem}
+
+\begin{proof}
+  We sketch the proof. First approximate
+  $f \in L^p(\R)$ by a simple
+  function (one that takes only finitely
+  many distinct values)
+  $\phi = \sum_{k = 1}^N c_k \chi_{E_k}$,
+  e.g. by rounding down to the nearest
+  integer multiple of $2^{-n}$. Then
+  use Urysohn's lemma to approximate
+  $\chi_{E_k}$ by a continuous function.
+\end{proof}
+
+\begin{exercise}
+  Fix $1 \le p < \infty$. Prove that
+  if $f \in L^p(\R)$, then
+  $\lim_{a \to 0} \|f - T_a f\|_p = 0$.
+  We say that translation is
+  \emph{strongly continuous} on $L^p(\R)$.
+  For $p = \infty$, use
+  $C_0(\R)$ and the uniform norm instead.
+\end{exercise}
+
+\begin{lemma}[Riemann-Lebesgue lemma]
+  If $f \in L^1(\R)$, then
+  $\widehat{f} \in C_0(\R)$,
+\end{lemma}
+
+\begin{proof}
+  We have already seen that $\widehat{f}$
+  is continuous. So it
+  suffices to show decay at $\infty$.
+  Write
+  \[
+    \widehat{f}(\xi)
+    = - \int f(x) e^{-2\pi i \xi x}
+    e^{-2\pi i \xi (1 / 2\xi)}\, dx
+    = -\int_{-\infty}^\infty f(x) e^{-2\pi i \xi (x + 1 / 2\xi)}\, dx.
+  \]
+  Now make the change of variables
+  $x \mapsto x - 1 / 2\xi$, so we get
+  \[
+    \widehat{f}(\xi)
+    = - \int_{-\infty}^\infty f\left(x - \frac{1}{2\xi}\right) e^{-2\pi i \xi x}\, dx
+    = - \int T_{1 / 2\xi} f(x) e^{-2\pi i \xi x}\, dx.
+  \]
+  Taking an average with the usual
+  expression for $\widehat{f}(\xi)$, we
+  have
+  \[
+    \widehat{f}(\xi)
+    = \frac{1}{2} \int (f(x) - T_{1 / 2\xi} f(x)) e^{-2\pi i \xi x}\, dx.
+  \]
+  Taking absolute values, we obtain
+  \[
+    |\widehat{f}(\xi)|
+    \le \frac{1}{2} \int |f(x) - T_{1 / 2\xi} f(x)|\, dx
+    = \frac{1}{2} \|f - T_{1 / 2\xi} f\|_1
+    \xrightarrow[\xi \to \pm \infty]{}
+    0
+  \]
+  by the strong continuity of translation
+  on $L^1(\R)$.
+\end{proof}
+
+\begin{exercise}
+  The following is an alternative proof
+  of the Riemann-Lebesgue lemma.
+  Recall that we have $\widehat{\chi}_{-T, T} = d_{2\pi T} \in C_0(\R)$.
+  By taking translations and dilations, we
+  see that $\widehat{\chi}_{[a, b]} \in C_0(\R)$.
+  Consider \emph{really simple functions}
+  $\phi = \sum_{k = 1}^N c_k \chi_{[a_k, b_k]}$,
+  and by linearity we can write
+  \[
+    \widehat{\phi}
+    = \sum_{k = 1}^N c_k \widehat{\chi}_{[a_k, b_k]} \in C_0(\R).
+  \]
+  Note that really simple functions are also
+  dense in $L^p(\R)$ for $1 \le p < \infty$.
+  So if $f \in L^1(\R)$, there exist
+  really simple $\phi_n \to f$ in $L^1$-norm.
+  On the Fourier side, we have
+  \[
+    \|\widehat{f} - \widehat{\phi}_n\|_\infty
+    \le \|f - \phi_n\|_1 \longrightarrow 0.
+  \]
+  Since $\phi_n \to \widehat{f}$ uniformly
+  and $C_0(\R)$ is a Banach space,
+  we conclude $\widehat{f} \in C_0(\R)$.
+  Fill in the details.
+\end{exercise}
+
+\section{Position and Momentum Operators}
+
+\begin{definition}
+  The \emph{position operator} $P : L^1(\R) \to L^1(\R)$ is
+  given by $P f(x) = x f(x)$.
+  Note that $P$ is unbounded on $L^1(\R)$
+  (in fact, $P$ is not defined on all
+  of $L^1(\R)$).
+  Restrict $P$ to the domain
+  \[
+    D_P = \{f \in L^1(\R) : xf(x) \in L^1(\R)\},
+  \]
+  which is dense in $L^1(\R)$.
+  Note that $D_P$ cannot be bounded
+  as it does not admit an extension
+  to $L^1(\R)$.
+\end{definition}
+
+\begin{exercise}
+  Show that
+  $\sup_{\|f\|_1 = 1, f \in D_P} \|P f\|_1 = \infty$.
+\end{exercise}
+
+\begin{definition}
+  The \emph{momentum operator}
+  $M : L^1(\R) \to L^1(\R)$ is given by
+  $M f = f' / 2\pi i$. Similarly,
+  $M$ is unbounded and defined only on a
+  dense subset of $L^1(\R)$.
+\end{definition}
+
+\begin{remark}
+  We have the relation
+  $(Mf)^\wedge(\xi) = \xi P \widehat{f}(\xi)$,
+  whenever the statement makes sense.
+\end{remark}
+
+\section{An Open Problem}
+
+\begin{conjecture}[HRT conjecture]
+  Assume $g$ is not zero a.e.,
+  $a_k, b_k$ are distinct, and
+  consider finite linear combinations of
+  translations and modulations
+  of $g \in L^2(\R)$ of the following form:
+  \[
+    \sum_{k = 1}^N c_k e^{2\pi i b_k x} g(x - a_k). \tag{$*$}
+  \]
+  If $(*) = 0$, then must it be that
+  $c_1 = \cdots = c_N = 0$? In other
+  words, are these linearly
+  independent?
+\end{conjecture}
+
+\begin{remark}
+  Consider the special case $b_k = 0$
+  for every $k$, so
+  $\sum c_k T_{a_k} g = \sum c_k g(x - a_k) = 0$ a.e. Then
+  \[
+    \left(\sum c_k T_{a_k} g\right)^\wedge
+    = \sum c_k M_{-a_k} \widehat{g}
+    = \left(\sum_{k = 1}^N c_k e^{-2\pi i a_k \xi}\right)
+    \widehat{g}(\xi) = 0.
+  \]
+  Since $\widehat{g}$ is not zero a.e., we
+  must have
+  $\sum_{k = 1}^N c_k e^{-2\pi i a_k \xi} = 0$,
+  which implies $c_k = 0$ for all $k$.
+  In particular, this means that
+  translations alone are linearly independent
+  (the same is true for modulations alone).
+\end{remark}
+
+\begin{remark}
+  The general case of the HRT conjecture
+  is still open. Note that after taking a
+  Fourier transform, we end up with
+  the same problem, just for $\widehat{g}$
+  instead of $g$.
+\end{remark}
+
+\section{Convolution}
+
+\begin{definition}
+  If $f, g$ are measurable on $\R$, their
+  \emph{convolution} is (formally)
+  \[
+    (f * g)(x)
+    = \int_{-\infty}^\infty
+    f(y) g(x - y)\, dy.
+  \]
+\end{definition}
+
+\begin{remark}
+  Note that if $g = \chi_{-T, T} / 2T$,
+  then
+  \[
+    \int_{-\infty}^\infty
+    f(y) g(x - y)\, dy
+    = \frac{1}{2T} \int_{x - T}^{x + T} f(y) dy
+    = \mathrm{Avg}_{[-T, T]} f,
+  \]
+  so we can see convolution as a
+  averaging or smoothing operation
+  (also known as \emph{mollification}).
+\end{remark}
+
+\begin{remark}
+  We would like to show
+  $f, g \in L^1(\R)$ implies
+  $f * g \in L^1(\R)$. Note that
+  $(f * g)^\wedge = \widehat{f} \widehat{g} \in C_0(\R)$,
+  since $C_0(\R)$ is closed under
+  multiplication, even though $L^1(\R)$
+  is not.
+\end{remark}
