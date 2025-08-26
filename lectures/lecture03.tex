@@ -1,0 +1,360 @@
+\chapter{Aug.~3 --- Convolution}
+
+\section{Convolution}
+
+\begin{definition}
+  If $f, g$ are measurable on $\R$, their
+  \emph{convolution} is (formally)
+  \[
+    (f * g)(x)
+    = \int_{-\infty}^\infty
+    f(y) g(x - y)\, dy.
+  \]
+\end{definition}
+
+\begin{remark}
+  When it exists, we have
+  \[
+    (f * g)(x)
+    = \int_{-\infty}^\infty
+    f(y) g(x - y)\, dy
+    = \int_{-\infty}^\infty
+    f(x - y) g(y)\, dy
+    = (g * f)(x)
+  \]
+  by the change of variables
+  $y \mapsto x - y$. So
+  $f * g = g * f$, if it exists. Similarly,
+  $f * (g * h) = (f * g) * h$
+  if each of these convolutions exist.
+\end{remark}
+
+\begin{remark}
+  If we take $g_T = \chi_{-T, T} / 2T$
+  (note that $\|g_T\|_1 = 1$),
+  then
+  \[
+    (f * g_T)(x)
+    = \int_{-\infty}^\infty
+    f(y) g_T(x - y)\, dy
+    = \frac{1}{2T} \int_{x - T}^{x + T} f(y) dy
+    = \mathrm{Avg}_{[-T, T]} f(x),
+  \]
+  so we can see convolution as a
+  averaging or smoothing operation
+  (also known as \emph{mollification}).
+\end{remark}
+
+\begin{remark}
+  We would like to show
+  $f, g \in L^1(\R)$ implies
+  $f * g \in L^1(\R)$. Note that
+  $(f * g)^\wedge = \widehat{f} \widehat{g} \in C_0(\R)$,
+  since $C_0(\R)$ is closed under
+  multiplication, even though $L^1(\R)$
+  is not.
+\end{remark}
+
+\begin{remark}
+  The \emph{Lebesgue differentiation theorem}
+  says that if $f \in L^1_{\loc}(\R)$, then
+  $(f * g_T)(x) \to f(x)$ a.e.
+\end{remark}
+
+\section{Properties of Convolution}
+
+\begin{remark}
+  Use the notation
+  \[
+    \langle f, g \rangle
+    = \int_{-\infty}^\infty
+    f(x) \overline{g(x)}\, dx,
+  \]
+  whenever this integral exists.
+  Then \emph{H\"older's inequality}
+  says that if $1 / p + 1 / p' = 1$
+  with $1 \le p \le \infty$ and
+  $f \in L^p(\R)$, $g \in L^{p'}(\R)$,
+  then $fg \in L^1(\R)$ and we have
+  \[
+    |\langle f, g \rangle|
+    \le \int |f(x)| |g(x)|\, dx
+    \le \|f\|_p \|g\|_{p'}.
+  \]
+\end{remark}
+
+\begin{theorem}
+  For $1 \le p \le \infty$, if
+  $f \in L^p(\R)$ and
+  $g \in L^1(\R)$, then
+  $f * g \in L^\infty(\R)$.
+\end{theorem}
+
+\begin{proof}
+  By H\"older's inequality, we can write
+  \[
+    \int |f(y) g(x - y)|\, dy
+    \le \|f\|_p \|g(x)\|_{p'}
+    < \infty,
+  \]
+  so $(f * g)(x)$ exists for every $x \in \R$.
+\end{proof}
+
+\begin{exercise}
+  Show that $f * g \in C_b(\R) = \{h : \R \to \C : h \text{ is continuous and bounded}\}$.
+\end{exercise}
+
+\begin{remark}
+  Denote $g^*(y) = \overline{g(-y)}$. Then
+  we have
+  \[
+    (f * g)(x)
+    = \int f(y) g(x - y)\, dy
+    = \int f(y) \overline{g^*(y - x)}\, dy
+    = \langle f, T_x g^* \rangle.
+  \]
+\end{remark}
+
+\begin{theorem}
+  Let $f, g \in L^1(\R)$. Then
+  \begin{enumerate}
+    \item $f(y) g(x - y)$ is measurable
+      and integrable on $\R^2$;
+    \item for a.e. $x \in \R$,
+      $f(y) g(x - y)$ is measurable
+      and integrable on $\R$ as a
+      function of $y$;
+    \item $f * g \in L^1(\R)$ and
+      $\|f * g\|_1 \le \|f\|_1 \|g\|_1$, i.e.
+      convolution is
+      \emph{submultiplicative} on $L^1(\R)$;
+    \item $(f * g)^\wedge(\xi) = \widehat{f}(\xi) \widehat{g}(\xi)$ for every $\xi \in \R$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  $(1)$ Let $h(x, y) = f(x)$. Then we have
+  \[
+    \{h > a\} = h^{-1}((a, \infty))
+    = \{(x, y) : f(x) > a\}
+    = \{f > a\} \times \R,
+  \]
+  which is measurable in $\R^2$ since
+  $\{f > a\}$ and $\R$ are measurable in
+  $\R$. Similarly,
+  $g(y)$ is measurable on $\R^2$, so
+  $F(x, y) = f(x) g(y)$ is measurable
+  on $\R^2$. Now make a linear change
+  of variables $T(x, y) = (y, x - y)$,
+  so $H = F \circ T = f(y) g(x - y)$ is
+  measurable (note that linear maps
+  preserve measurability).
+
+  Now we can integrate by Tonelli's
+  theorem and see that
+  \begin{align*}
+    \iint |f(y) g(x - y)|\, dx dy
+    &= \int |f(y)| \left(\int |g(x - y)|\, dx\right) dy
+    = \int |f(y)| \left(\int |g(z)|\, dz\right) dy \\
+    &= \int |f(y)| \|g\|_1\, dy
+    = \|f\|_1 \|g\|_1 < \infty,
+  \end{align*}
+  hence $f(y) g(x - y)$ is integrable
+  on $\R^2$.
+
+  $(2)$ This follows by Fubini's theorem
+  since $f(y) g(x - y)$ is integrable.
+
+  $(3)$ By $(2)$, $(f * g)(x)$ exists
+  for a.e. $x$, and
+  \[
+    \int |(f * g)(x)|\, dx
+    = \int \left|\int f(y) g(x - y)\, dy\right| dx
+    \le \iint |f(y) g(x - y)|\, dy dx
+    \le \|f\|_1 \|g\|_1,
+  \]
+  which is the desired inequality.
+
+  $(4)$ Justify the following calculation
+  as an exercise via Fubini/Tonelli's theorem:
+  \begin{align*}
+    (f * g)^\wedge(\xi)
+    &= \int (f * g)(x) e^{-2\pi i \xi x}\, dx
+    = \int \left(\int f(y) g(x - y)\, dy\right) e^{-2\pi i \xi x}\, dx \\
+    &= \iint f(y) e^{-2\pi i \xi y}
+    g(x - y) e^{-2\pi i \xi (x - y)}\, dy dx.
+  \end{align*}
+  By Fubini's theorem, we can exchange
+  orders and write
+  \begin{align*}
+    (f * g)^\wedge(\xi)
+    &= \int f(y) e^{-2\pi i \xi y}
+    \left(\int g(x - y) e^{-2\pi i \xi (x - y)}\, dx\right) dy \\
+    &= \int f(y) e^{-2\pi i \xi y} \left(\int g(z) e^{-2\pi i \xi z}\, dz\right) dy
+    = \widehat{f}(\xi) \widehat{g}(\xi),
+  \end{align*}
+  which is the desired equality.
+\end{proof}
+
+\begin{corollary}
+  $L^1(\R)$ is closed under convolution.
+\end{corollary}
+
+\begin{definition}
+  An \emph{algebra} is a vector space
+  $A$ with a product such that
+  \begin{enumerate}[(a)]
+    \item $(fg) h = f(gh)$,
+    \item $f(g + h) = fg + fh$,
+    \item $\alpha (fg) = (\alpha f) g = f(\alpha g)$.
+  \end{enumerate}
+  If $fg = gf$ always, then we say that
+  $A$ is \emph{commutative}.
+  A Banach space which is also an algebra
+  with a submultiplicative product
+  is a \emph{Banach algebra}.
+\end{definition}
+
+\begin{example}
+  With convolution as a product,
+  $L^1(\R)$ becomes a commutative
+  Banach algebra without identity.
+  Similarly, $C_0(\R)$ is also a
+  commutative Banach algebra
+  without identity (under pointwise products).
+  The space $\mathcal{B}(X)$ of
+  bounded linear operators on a Banach
+  space $X$ is also a Banach space under the
+  operator norm, and
+  we have $\|AB\| \le \|A\| \|B\|$
+  with composition as a product.
+  So $\mathcal{B}(X)$ is a noncommutative
+  Banach algebra, with identity.
+\end{example}
+
+\section{Young's Inequality}
+\begin{theorem}[Young's inequality, special case]
+  Fix $1 \le p \le \infty$. If
+  $f \in L^p(\R)$ and $g \in L^1(\R)$, 
+  then $f * g \in L^p(\R)$ and
+  $\|f * g\|_p \le \|f\|_p \|g\|_1$.
+\end{theorem}
+
+\begin{proof}
+  The case $p = \infty$ is easy
+  by H\"older's inequality and
+  $p = 1$ is done,
+  so assume $1 < p < \infty$. Then
+  \[
+    |(f * g)(x)|
+    \le \int |f(y)| |g(x - y)|\, dy
+    = \int \left(|f(y)| |g(x - y)|^{1 / p}\right) \left(|g(x - y)|^{1 / p'}\right) \, dy,
+  \]
+  By H\"older's inequality, we can write
+  \begin{align*}
+    |(f * g)(x)|
+    &\le \left(\int |f(y)|^p |g(x - y)|\, dy\right)^{1 / p}
+    \left(\int |g(x - y)|\, dy\right)^{1 / p'} \\
+    &\le \|g\|_1^{1 / p'} \left(\int |f(y)|^p |g(x - y)|\, dy\right)^{1 / p}.
+  \end{align*}
+  Now taking $L^p$-norms, we get
+  \[
+    \|f * g\|_p^p
+    = \int |(f * g)(x)|^p\, dx
+    \le \|g\|_1^{p / p'}
+    \iint |f(y)|^p |g(x - y)|\, dy dx.
+  \]
+  By Tonelli's theorem, we can exchange
+  orders and write
+  \[
+    \|f * g\|_p^p
+    \le \|g\|_1^{p / p'}
+    \int |f(y)|^p \left(\int |g(x - y)|\, dx\right) dy
+    \le \|g\|_1^{1 + p / p'} \|f\|_p^p
+    = \|g\|_1^p \|f\|_p^p,
+  \]
+  so we get the desired inequality
+  $\|f * g\|_p \le \|f\|_p \|g\|_1$
+  after taking $p$th roots.
+\end{proof}
+
+\begin{exercise}[Young's inequality, general case]
+  Let $1 \le p, q, r \le \infty$ satisfy
+  $1 / r = 1 / p + 1 / q - 1$.
+  If $f \in L^p(\R)$ and
+  $g \in L^q(\R)$, then
+  \[
+    \|f * g\|_r \le \|f\|_p \|g\|_q.
+  \]
+\end{exercise}
+
+\begin{remark}
+  Recall \emph{Minkowski's inequality}
+  (the triangle inequality in $L^p(\R)$):
+  \[
+    \left\| \sum f_k \right\|_p
+    \le \sum \|f_k\|_p.
+  \]
+  \emph{Minkowski's integral inequality}
+  then says that for $1 \le p \le \infty$,
+  \[
+    \left\|\int f_x\, dx \right\|_p
+    = \left(\int \left|\int f(x, y)\, dx\right|^p\, dy\right)^{1 / p}
+    \le \int \left(\int |f(x, y)|^p\, dy\right)^{1 / p} dx
+    = \int \|f_x\|_p\, dx.
+  \]
+  One can also use this to prove to
+  Young's inequality.
+\end{remark}
+
+\begin{remark}
+  The \emph{Babenko-Beckner constant}
+  is the optimal constant in front
+  of H\"older's inequality:
+  \[
+    A_p = \left(\frac{p^{1 / p}}{(p')^{1 / p'}}\right)^{1 / 2}.
+  \]
+  The optimal constant in Young's inequality
+  is $A_p A_q A_{r'}$, i.e. we have
+  \[
+    \|f * g\|_r
+    \le (A_p A_q A_{r'}) \|f\|_p \|g\|_q.
+  \]
+\end{remark}
+
+\section{The Dirac Delta}
+
+\begin{remark}
+  Is there an identity for convolution?
+  Suppose there was a function
+  $\delta \in L^1(\R)$ (the \emph{Dirac delta function}) such that
+  $f * \delta = f$ for all
+  $f \in L^1(\R)$. Then we have
+  $(f * \delta)^\wedge = \widehat{f}$,
+  so
+  \[
+    \widehat{f}(\xi) \widehat{\delta}(\xi)
+    = \widehat{f}(\xi)
+    \quad \text{for all } f \in L^1(\R).
+  \]
+  Take $f(x) = e^{-x^2}$ with
+  $\widehat{f}(\xi) = e^{-\xi^2}$ and
+  note that $\widehat{f}(\xi)$ is
+  everywhere nonzero. Then
+  $\widehat{\delta}(\xi) = 1$ for
+  all $\xi \in \R$, which contradicts the
+  Riemann-Lebesgue lemma.
+
+  The correct way to work with the
+  Dirac delta is to use the measure
+  \[
+    \delta(E) =
+    \begin{cases}
+      1, & 0 \in E, \\
+      0, & 0 \notin E.
+    \end{cases}
+  \]
+  One can then integrate against
+  the measure $\delta$ to achieve a
+  similar effect.
+\end{remark}

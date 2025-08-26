@@ -197,7 +197,7 @@
   whenever the statement makes sense.
 \end{remark}
 
-\section{An Open Problem}
+\section{The HRT Conjecture}
 
 \begin{conjecture}[HRT conjecture]
   Assume $g$ is not zero a.e.,
@@ -239,40 +239,4 @@
   Fourier transform, we end up with
   the same problem, just for $\widehat{g}$
   instead of $g$.
-\end{remark}
-
-\section{Convolution}
-
-\begin{definition}
-  If $f, g$ are measurable on $\R$, their
-  \emph{convolution} is (formally)
-  \[
-    (f * g)(x)
-    = \int_{-\infty}^\infty
-    f(y) g(x - y)\, dy.
-  \]
-\end{definition}
-
-\begin{remark}
-  Note that if $g = \chi_{-T, T} / 2T$,
-  then
-  \[
-    \int_{-\infty}^\infty
-    f(y) g(x - y)\, dy
-    = \frac{1}{2T} \int_{x - T}^{x + T} f(y) dy
-    = \mathrm{Avg}_{[-T, T]} f,
-  \]
-  so we can see convolution as a
-  averaging or smoothing operation
-  (also known as \emph{mollification}).
-\end{remark}
-
-\begin{remark}
-  We would like to show
-  $f, g \in L^1(\R)$ implies
-  $f * g \in L^1(\R)$. Note that
-  $(f * g)^\wedge = \widehat{f} \widehat{g} \in C_0(\R)$,
-  since $C_0(\R)$ is closed under
-  multiplication, even though $L^1(\R)$
-  is not.
 \end{remark}
