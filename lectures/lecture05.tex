@@ -1,0 +1,273 @@
+\chapter{Sept.~2 --- Smoothness and Decay}
+
+\section{Smoothness and Decay}
+
+\begin{theorem}[Decay in time implies smoothness in frequency]
+  Assume $f \in L^1(\R)$ and
+  $x^m f(x) \in L^1(\R)$, where $m > 0$.
+  Then
+  \[
+    \widehat{f}
+    \in C_0^m(\R)
+    = \{
+      g : g, g', \dots, g^{(m)} \in C_0(\R)
+    \}.
+  \]
+  Furthermore, we have
+  \[
+    \widehat{f}^{(k)}
+    = \frac{d^k}{d\xi^k} \widehat{f}
+    = \left((-2\pi i x)^k f(x)\right)^\wedge.
+  \]
+\end{theorem}
+
+\begin{proof}
+  The proof is by induction on $m$.
+  When $m = 1$, we can formally write
+  \begin{align*}
+    \frac{d}{d\xi} \widehat{f}(\xi)
+    &= \frac{d}{d\xi} \int f(x) e^{-2\pi i \xi x} \, dx \\
+    &\overset{(*)}{=} \int f(x) \frac{d}{d\xi} e^{-2\pi i \xi x} \, dx
+    = \int f(x) (-2\pi i x) e^{-2\pi i \xi x} \, dx
+    = (-2\pi i x f(x))^\wedge(\xi).
+  \end{align*}
+  It suffices to justify step $(*)$, which
+  we will do by appealing to the
+  dominated convergence theorem. We
+  can write
+  \[
+    \widehat{f}'(\xi)
+    = \lim_{\eta \to 0} \frac{\widehat{f}(\xi + \eta) - \widehat{f}(\xi)}{\eta}
+    = \lim_{\eta \to 0} \int f(x) \frac{e^{-2\pi i (\xi + \eta) x} - e^{-2\pi i \xi x}}{\eta}\, dx.
+  \]
+  Note that we have the pointwise limit
+  \[
+    f(x) \frac{e^{-2\pi i (\xi + \eta) x} - e^{-2\pi i \xi x}}{\eta}
+    \xrightarrow{\eta \to 0}
+    f(x) \frac{d}{d\xi} e^{-2\pi i \xi x}
+    = -2\pi i x f(x) e^{-2\pi i \xi x}.
+  \]
+  Also note that we can bound
+  \[
+    \left|f(x) \frac{e^{-2\pi i (\xi + \eta) x} - e^{-2\pi i \xi x}}{\eta}\right|
+    = \left|f(x) \frac{e^{-2\pi i \eta x} - 1}{\eta}\right|
+    \le \left|f(x) \frac{-2\pi i \eta x}{\eta}\right|
+    = |2\pi x f(x)|,
+  \]
+  where we noted that $|e^{i\theta} - 1| \le |\theta|$ for $\theta \in \R$.
+  Thus $2\pi x f(x)$ dominates the
+  integrand and is integrable since
+  $x f(x) \in L^1(\R)$ by assumption,
+  we can conclude $(*)$ by the dominated
+  convergence theorem. Then
+  $\widehat{f}' \in C_0(\R)$ by the
+  Riemann-Lebesgue lemma, since
+  $\widehat{f}' = (-2\pi i x f(x))^\wedge$
+  where $-2\pi i x f(x) \in L^1(\R)$.
+
+  The inductive step is part of Homework 1.
+\end{proof}
+
+\begin{remark}
+  Recall the  position and momentum
+  operators $Pf(x) = x f(x)$ and
+  $M f(x) = f'(x) / 2\pi i$. If
+  $f, Pf \in L^1(\R)$, then the above
+  theorem tells us that
+  $(Pf)^\wedge = -M \widehat{f}$.
+\end{remark}
+
+\section{Absolute Continuity}
+
+\begin{definition}
+  A function $f : [a, b] \to \C$ is
+  \emph{absolutely continuous} if
+  for all $\epsilon > 0$, there exists
+  $\delta > 0$ such that if
+  $\{[a_j, b_j]\}_{j}$ are countably many
+  non-overlapping intervals, then
+  \[
+    \sum_j (b_j - a_j) < \delta
+    \quad \text{implies} \quad
+    \sum_j |f(b_j) - f(a_j)| < \epsilon.
+  \]
+  Define $\AC_{\loc}(\R) = \{f \in C(\R) : f \text{ is absolutely continuous on every interval } [a, b]\}$.
+\end{definition}
+
+\begin{theorem}[Fundamental theorem of calculus]
+  If $g : [a, b] \to \C$, then
+  the following are equivalent:
+  \begin{enumerate}
+    \item $g \in \AC[a, b]$;
+    \item there exists $f \in L^1[a, b]$
+      such that for all $x \in [a, b]$,
+      \[
+        g(x) - g(a)
+        = \int_a^x f(t) \, dt;
+      \]
+    \item $g$ is differentiable at a.e.
+      point, $g' \in L^1[a, b]$, and
+      \[
+        g(x) - g(a)
+        = \int_a^x g'(t) \, dt.
+      \]
+  \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+  The Cantor-Lebesgue function
+  $\varphi : [0, 1] \to [0, 1]$ is continuous
+  with $\varphi' = 0$ a.e., but
+  \[
+    \int_0^1 \varphi'(x) \, dx = 0
+    \ne 1 = \varphi(1) - \varphi(0).
+  \]
+\end{remark}
+
+\begin{lemma}[Growth lemma]
+  If $f : [a, b] \to \R$ is measurable and
+  differentiable at every point in
+  a measurable set $E \subseteq [a, b]$,
+  then
+  \[
+    |f(E)|_e \le \int_E |f'|,
+  \]
+  where $|f(E)|_e$ denotes the
+  exterior Lebesgue measure of $f(E)$.
+\end{lemma}
+
+\begin{theorem}[Banach-Zaretsky theorem]
+  If $f : [a, b] \to \R$, then the
+  following are equivalent:
+  \begin{enumerate}
+    \item $f \in \AC[a, b]$;
+    \item $f$ is continuous, $f$ has
+      bounded variation, and
+      $|A| = 0$ implies $|f(A)| = 0$;
+    \item $f$ is continuous and
+      differentiable a.e.,
+      $f' \in L^1[a, b]$, and
+      $|A| = 0$ implies $|f(A)| = 0$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}\label{thm:abs-cont-sufficient}
+  If $f : [a, b] \to \C$ is differentiable
+  on $[a, b]$ and $f' \in L^1[a, b]$,
+  then $f \in \AC[a, b]$.
+\end{theorem}
+
+\begin{proof}
+  By the Banach-Zaretsky theorem, it
+  suffices to show that $|A| = 0$ implies
+  $|f(A)| = 0$. If $|A| = 0$, then by the
+  growth lemma,
+  \[
+    |f(A)| \le \int_A |f'| = 0,
+  \]
+  which completes the proof. (Technically
+  we should split $f$ into its real and
+  imaginary parts.)
+\end{proof}
+
+\section{Smoothness and Decay, Continued}
+
+\begin{theorem}[Smoothness in time implies decay in frequency]
+  If $f \in L^1(\R)$ is everywhere
+  $m$-times differentiable
+  and $f, f', \dots, f^{(m)} \in L^1(\R)$,
+  then
+  \[
+    \widehat{f^{(k)}}(\xi)
+    = (2\pi i \xi)^k \widehat{f}(\xi),
+    \quad \text{for } k = 0, \dots, m,
+  \]
+  hence $|\widehat{f}(\xi)| \le |2\pi \xi|^{-k} |\widehat{f^{(k)}}(\xi)| \le |2\pi \xi|^{-k} \|\widehat{f^{(k)}}\|_\infty \le |2\pi \xi|^{-k} \|f^{(k)}\|_1$
+  for $k = 0, \dots, m$.
+\end{theorem}
+
+\begin{proof}
+  We prove only the case $m = 1$, the
+  rest follows by induction. Assume
+  $f, f' \in L^1(\R)$. By Theorem
+  \ref{thm:abs-cont-sufficient},
+  we have $f \in \AC_{\loc}(\R)$. Hence
+  by the fundamental theorem of calculus,
+  \[
+    f(x) - f(0) = \int_0^x f'(t) \, dt.
+  \]
+  Because $f'$ is integrable, we get that
+  \[
+    \lim_{x \to \infty} f(x)
+    =
+    f(0) + \lim_{x \to \infty} \int_0^x f'(t)\, dt
+    = f(0)  + \int_0^\infty f'(t) \, dt.
+  \]
+  Since $f$ is integrable and this limit
+  exists, the limit must be $0$. Hence
+  $f \in C_0(\R)$. We can compute
+  \[
+    \widehat{f'}(\xi)
+    = \int_{-\infty}^\infty f'(x) e^{-2\pi i \xi x} \, dx
+    = \lim_{\substack{b \to \infty \\ a \to -\infty}} \int_a^b f'(x) e^{-2\pi i \xi x} \, dx.
+  \]
+  Since $f$ is absolutely continuous, we
+  can integrate by parts to get
+  \[
+    \widehat{f'}(\xi)
+    = \lim_{\substack{b \to \infty \\ a \to -\infty}}
+    \left[f(b) e^{-2\pi \xi b} - f(a) e^{-2\pi i \xi a} + (2\pi i \xi)\int_a^b f(x) e^{-2\pi i \xi x}\, dx \right]
+    = (2\pi i \xi) \widehat{f}(\xi),
+  \]
+  which proves the desired result.
+\end{proof}
+
+\begin{remark}
+  Note that for the absolute continuity
+  arguments, we need to first restrict
+  to a finite interval and then
+  take limits, since we only know that
+  $f \in \AC_{\loc}(\R)$.
+\end{remark}
+
+\section{Approximate Identities}
+
+\begin{remark}
+  Recall that if we take
+  $g_T = \chi_{[-T, T]} / 2T$,
+  then we have
+  $(f * g_T)(x) = \mathrm{Avg}_{[x - T, x + T]} f$.
+  As $T \to 0$, this converges to
+  $f$ if $f$ is continuous, and converges
+  a.e. to $f$ if $f$ is integrable. In
+  particular, this is almost like
+  a identity for the convolution operation.
+\end{remark}
+
+\begin{definition}
+  If $k_\lambda \in L^1(\R)$ for $\lambda > 0$ (or sometimes $\lambda \in \N$) satisfy:
+  \begin{enumerate}[(a)]
+    \item Normalization: $\displaystyle \int_{-\infty}^\infty k_{\lambda} = 1$ for every $\lambda$,
+    \item $L^1$-boundedness:
+      $\displaystyle \sup_{\lambda} \|k_\lambda\|_1 = \sup_{\lambda} \int_{-\infty}^\infty |k_\lambda| < \infty$,
+    \item $L^1$-concentration:
+      $\displaystyle \lim_{\lambda \to \infty} \int_{|x| \ge \delta} |k_\lambda| = 0$
+      for every $\delta > 0$,
+  \end{enumerate}
+  then we say that $\{k_\lambda\}$ is
+  an \emph{approximate identity (for
+  convolution)}.
+\end{definition}
+
+\begin{exercise}
+  If $k \in L^1(\R)$ and
+  $\displaystyle \int_{-\infty}^\infty k = 1$, then
+  $k_\lambda(x) = \lambda k(\lambda x)$
+  forms an approximate identity.
+\end{exercise}
+
+\begin{remark}
+  If we choose $k_{\lambda}$ to be nice,
+  then $f * k_\lambda$ will also be nice and
+  ``close'' to $f$.
+\end{remark}
