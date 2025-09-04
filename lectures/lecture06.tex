@@ -1,0 +1,263 @@
+\chapter{Sept.~4 --- Approximate Identities}
+
+\section{Properties of Approximate Identities}
+
+\begin{theorem}
+  If $\{k_{\lambda}\}$ is an approximate
+  identity, then for all $f \in L^1(\R)$,
+  \[
+    \lim_{\lambda \to \infty} \|f * k_{\lambda} - f\|_1 = 0.
+  \]
+  That is, $f * k_{\lambda} \to f$ in $L^1$-norm.
+\end{theorem}
+
+\begin{proof}
+  We have already seen that
+  $f * k_{\lambda} \in L^1(\R)$. Then
+  \[
+    \|f - f * k_{\lambda}\|_1
+    = \int |f(x) - (f * k_{\lambda})(x)| \, dx
+    = \int \left|f(x) \int k_{\lambda}(t)\, dt - \int f(x - t)k_\lambda(t)\, dt\right| dx,
+  \]
+  where we used that
+  $\int k_{\lambda}(t)\, dt = 1$.
+  Collecting terms and taking absolute
+  values inside,
+  \[
+    \|f - f * k_{\lambda}\|_1
+    \le \iint |f(x) - f(x - t)| |k_{\lambda}(t)|\, dt dx.
+  \]
+  By Tonelli's theorem, we can
+  exchange orders to get
+  \[
+    \|f - f * k_{\lambda}\|_1
+    \le \int |k_{\lambda}(t)| \left(\int |f(x) - T_t f(x)|\, dx\right) dt
+    = \int |k_{\lambda}(t)| \|f - T_t f\|_1 dt.
+  \]
+  We split this integral into two parts:
+  \[
+    \|f - f * k_{\lambda}\|_1
+    \le \int_{|t| < \delta} |k_{\lambda}(t)| \|f - T_t f\|_1 dt
+    + \int_{|t| \ge \delta} |k_{\lambda}(t)| \|f - T_t f\|_1 dt.
+  \]
+  By the strong continuity of translation,
+  we know that $\lim_{t \to 0} \|f - T_t f\|_1 = 0$,
+  so for any $\epsilon > 0$, there exists
+  $\delta > 0$ such that
+  $|t| < \delta$ implies
+  $\|f - T_t f\|_1 < \epsilon$.
+  This lets us estimate the first integral:
+  \[
+    \|f - f * k_{\lambda}\|_1
+    \le \epsilon \int_{|t| < \delta} |k_{\lambda}(t)|\, dt
+    + \int_{|t| \ge \delta} |k_{\lambda}(t)| \|f - T_t f\|_1 dt.
+  \]
+  For the second integral, we can use
+  $\|f - T_t f\|_1 \le \|f\|_1 + \|T_t f\|_1 = 2\|f\|_1$ to get
+  \[
+    \|f - f * k_{\lambda}\|_1
+    \le \epsilon \int_{|t| < \delta} |k_{\lambda}(t)|\, dt
+    + 2\|f\|_1 \int_{|t| \ge \delta} |k_{\lambda}(t)|\, dt
+    \le \epsilon K + 2 \|f\|_1 \epsilon
+  \]
+  where $K = \sup_{\lambda} \|k_{\lambda}\|_1 < \infty$ and
+  $\lambda$ is large enough (as
+  $\int_{|t| \ge \delta} |k_{\lambda}(t)|\, dt \to 0$).
+  So $\|f - f * k_{\lambda}\|_1 \to 0$.
+\end{proof}
+
+\begin{exercise}
+  Show that for $1 \le p < \infty$,
+  we still have
+  $\|f - f * k_{\lambda}\|_{p} \to 0$
+  as $\lambda \to \infty$ for
+  $f \in L^p(\R)$.
+  For $p = \infty$, show that if
+  $f \in C_0(\R)$, then
+  $\|f - f * k_{\lambda}\|_{\infty} \to 0$
+  as $\lambda \to \infty$, that is
+  $f * k_{\lambda} \to f$ uniformly.
+\end{exercise}
+
+\begin{exercise}
+  Show that if $f \in C_b(\R)$, then for every
+  compact set $K \subseteq \R$,
+  \[
+    \lim_{\lambda \to \infty}
+    \|(f - f * k_{\lambda}) \chi_K\|_{\infty} = 0.
+  \]
+\end{exercise}
+
+\begin{definition}
+  A function $f$ is \emph{H\"older continuous} with exponent $\alpha > 0$ if
+  \[
+    |f(x) - f(y)| \le  K |x - y|^{\alpha}
+  \]
+  for some constant $K$ and all $x, y$.
+  If $\alpha = 1$, then we say that
+  $f$ is \emph{Lipschitz}.
+\end{definition}
+
+\begin{remark}
+  If $f$ is H\"older continuous with
+  exponent $\alpha > 1$, then the mean value
+  theorem implies that $f$ is constant.
+  Thus the interesting
+  range for
+  H\"older continuity
+  is $0 < \alpha \le 1$.
+\end{remark}
+
+\begin{exercise}
+  Let $f$ be bounded and
+  H\"older continuous with exponent $0 < \alpha \le 1$,
+  then show that
+  \[
+    f * k_{\lambda} \to f \quad \text{uniformly on $\R$}.
+  \]
+\end{exercise}
+
+\begin{remark}
+  If $f$ is differentiable and $f'$
+  is bounded, then $f$ is Lipschitz.
+\end{remark}
+
+\begin{remark}
+  Recall the \emph{Lebesgue differentiation theorem}, which
+  says that if $f \in L^1_{\loc}(\R)$, then
+  \[
+    (f * g_T)(x)
+    = \frac{1}{2T} \int_{x - T}^{x + T} f(t)\, dt
+    \longrightarrow f(x)
+    \quad \text{for a.e. $x$}.
+  \]
+  where $g_T = \chi_{[-T, T]}/(2T)$. The
+  points where the limit holds are called
+  the \emph{Lebesgue points} of $f$.
+\end{remark}
+
+\begin{theorem}
+  Assume $k$ is bounded and compactly
+  supported and
+  $\int k = 1$. Set
+  $k_\lambda(x) = \lambda k(\lambda x)$
+  for $\lambda > 0$.
+  Then for any $f \in L^1(\R)$,
+  \[
+    f * k_\lambda \to f \quad
+    \text{pointwise a.e.}
+  \]
+  Moreover, the pointwise limit holds
+  at every Lebesgue point of $f$.
+\end{theorem}
+
+\begin{proof}
+  Assume $\supp(k) \subseteq [-R, R]$.
+  We can write
+  \begin{align*}
+    \lim_{\lambda \to \infty}
+    |f(x) - (f * k_{\lambda})(x)|
+    &= \lim_{\lambda \to \infty}
+    \left|f(x) \int k_\lambda(x - t)\, dt - \int f(x) k_{\lambda}(x - t)\, dt\right| \\
+    &\le \lim_{\lambda \to \infty}
+    \int |f(x) - f(t)| \lambda |k(\lambda x - \lambda t)|\, dt \\
+    &\le \lim_{\lambda \to \infty}
+    \lambda \int_{x - R / \lambda}^{x + R / \lambda} |f(x) - f(t)| |k(\lambda x - \lambda t)|\, dt.
+  \end{align*}
+  Making a change of variables
+  $T = R / \lambda$, we have
+  \[
+    \lim_{\lambda \to \infty}
+    |f(x) - (f * k_{\lambda})(x)|
+    \le \lim_{T \to 0}
+     \frac{1}{2T}\int_{x - T}^{x + T} |f(x) - f(t)| \, dt
+     \cdot \|k\|_{\infty}
+     = 0
+  \]
+  for every Lebesgue point $x$
+  by the Lebesgue differentiation theorem.
+\end{proof}
+
+\section{Density Results and Smooth Urysohn Lemma}
+\begin{theorem}
+  $C_c^m(\R)$ is dense in $L^p(\R)$
+  for $m > 0$ and $1 \le p < \infty$.
+\end{theorem}
+
+\begin{proof}
+  Fix $\epsilon > 0$. Choose
+  $k \in C_c^m(\R)$ with
+  $\int k = 1$, and
+  set $k_{\lambda}(x) = \lambda k(\lambda x)$.
+  Note that there exists a compactly
+  supported $g \in L^p(\R)$ with
+  $\|f - g\|_p < \epsilon$ (e.g.
+  take $g = f \chi_{[-R, R]}$ for large
+  enough $R$, this works since $f \chi_{[-R, R]}$ converges
+  pointwise to $f$ as $R \to \infty$ and
+  is dominated by $f$, so the dominated
+  convergence theorem implies that
+  $f \chi_{[-R, R]} \to f$ in $L^p$-norm).
+  Then note that
+  $g * k_{\lambda} \in C_c^m(\R)$ and
+  $g * k_{\lambda} \to g$ in $L^p$-norm, so
+  there exists $\lambda$ such that
+  $\|g - g * k_{\lambda}\|_p < \epsilon$.
+  Thus
+  \[
+    \|f - g * k_{\lambda}\|_p
+    \le \|f - g\|_p + \|g - g * k_{\lambda}\|_p
+    < 2\epsilon
+  \]
+  which implies the desired result.
+\end{proof}
+
+\begin{corollary}
+  $C_c^{\infty}(\R)$ is dense in $L^p(\R)$
+  for $1 \le p < \infty$.
+\end{corollary}
+
+\begin{remark}
+  The above proof would work for $m = 0$
+  but becomes circular: The step
+  $g * k_{\lambda} \in C_c^m(\R)$
+  relies on the strong continuity of
+  translation, which we proved by first
+  showing it for $C_c(\R)$ and then by
+  an extension by density to
+  $L^p(\R)$. In particular, we needed to
+  already know that $C_c(\R)$ is dense
+  in $L^p(\R)$.
+\end{remark}
+
+\begin{prop}[$C^\infty$ Urysohn's lemma]
+  If $K \subseteq \R$ is compact and
+  $U \subseteq K$ is open, then
+  there exists $f \in C_c^{\infty}(\R)$
+  such that $0 \le f \le 1$, $f = 1$ on
+  $K$, and $f = 0$ on $U^c$.
+\end{prop}
+
+\begin{proof}
+  Since $K$ is compact and $U^c$ is closed,
+  we have
+  \[
+    d = \dist(K, U^c)
+    = \inf\{|x - y| : k \in K, y \notin U\}
+    > 0.
+  \]
+  Set $V = \{y \in \R : \dist(y, K) < d / 3\}$,
+  and choose any $k \in C_c^\infty(\R)$
+  such that $\supp(k) \subseteq [-d/3, d/3]$
+  and $\int k = 1$.
+  Take $f = k * \chi_V \in C_c^\infty(\R)$,
+  which has $\supp(f) \subseteq \supp(k) + V \subseteq U$. If $x \in K$, then
+  \[
+    f(x) = \int_V k(x - y)\, dy
+    = \int k = 1.
+  \]
+  One can check that $0 \le f \le 1$
+  and $f = 0$ on $U^c$
+  as an exercise, which would prove
+  the result.
+\end{proof}
